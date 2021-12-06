@@ -11,7 +11,7 @@
 Tips that improve your life in one way or another. This software downloads life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweet the most upvoted tips on Twitter.
 
 ------
-### Warning:
+### Warning
 Before using, modify account credentials in **inc** folder.
 
 ------
@@ -39,8 +39,10 @@ Before using, modify account credentials in **inc** folder.
 **0.1.2 beta (WIP)**
 
 ```
-- [ ] 
+- [ ]
 ```
+
+- History check on DynamoDB done.
 
 **0.1.1 beta**
 

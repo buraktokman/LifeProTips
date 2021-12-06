@@ -21,6 +21,7 @@ Licence   	: EULA
 
 from pathlib import Path
 from colorama import Fore, Back, Style
+from boto3.dynamodb.conditions import Key
 import sys
 import json
 import boto3
@@ -140,11 +141,20 @@ def sns_get_topic(topic_name):
 
 def dynamodb_get_item(table_name, key):
 	''' Get item from DynamoDB
+		{'Key': value}
 	'''
 	try:
 		dynamodb = boto3.resource('dynamodb')
 		table = dynamodb.Table(table_name)
-		response = table.get_item(Key=key)
+		response = table.get_item(
+			Key=key
+		 	# Key={'id': {'S': key}}
+			# Key={'id': key, 'flair': None}
+			)
+		# response = table.query(
+		# 	#IndexName='id',
+		# 	KeyConditionExpression=Key('id').eq(key)
+		# 	)
 		return response['Item']
 	except Exception as e:
 		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → {Style.RESET_ALL}ERROR Cannot get item!\n{e}")
@@ -198,6 +208,12 @@ if __name__ == '__main__':
 	item = {'id': 'r8vdza', 'title': "If you're at a hotel and have to call 911", 'flair': 'Miscellaneous'}
 	#dynamodb_put_item(CONFIG['dynamodb-table'], item)
 	#dynamodb_del_item(CONFIG['dynamodb-table'], {'tipId': '1'})
+
+	key = {'id': 'r9dk8n', 'flair': 'Miscellaneous'}
+	r = dynamodb_get_item('lifetips', key)
+	print(r)
+	exit()
+
 	r = dynamodb_get_all('lifetips')
 	for r2 in r:
 		print(r2)

@@ -31,6 +31,7 @@ import utilz
 import aws
 
 
+
 # ------ CONFIG --------------------------------
 '''
 Reddit Dev > https://www.reddit.com/prefs/apps
@@ -43,6 +44,7 @@ CONFIG = {	'reddit-account-file': WORK_DIR + 'inc/account-reddit.json',
 			'tweet-count': 6,
 			}
 HASHTAGS = ['tips', 'life']
+
 
 
 # ------ MAIN ----------------------------------
@@ -62,7 +64,6 @@ def main():
 						username=CONFIG['username'],
 						password=CONFIG['password'])
 						
-	time_start = time.time()
 	print(f"{logz.timestamp()}{Fore.GREEN} REDDIT → FETCH → {Style.RESET_ALL}Downloading...")
 
 	reddit_posts = []
@@ -89,38 +90,40 @@ def main():
 	# ------ CHECK HISTORY  ------------------------
 	with open(CONFIG['tweet-file']) as f:
 		temp_str = f.read() #readlines()
-	tweets_history = temp_str.split('\n\n')
+	tweets_history = temp_str.split('\n')
 
 	# SELECT NEW POSTS
 	tweets_to_send = []
 	for reddit_post in reddit_posts:
-		if reddit_post['title'] not in tweets_history:
+		key = {	'id': reddit_post['id'],
+				'flair': reddit_post['flair']}
+		r = aws.dynamodb_get_item(CONFIG['dynamodb-table'], key=key)
+		# if reddit_post['title'] not in tweets_history:
+		if r == False:
 			tweets_history.append(reddit_post['title'])
 			tweets_to_send.append(reddit_post)
-			
-			# INCOMPLETE
 			break
-
+	print(f'{logz.timestamp()}{Fore.GREEN} BOT → SELECTED → {Style.RESET_ALL}{tweets_to_send[0]["title"]}')
 
 
 	# ------ AUTH TWITTER --------------------------
-	api = twitter.create_api()
-
+	# api = twitter.create_api()
+	
 	# ------ SEND TWEET ---------------------------
 	# SELECT HASHTAG -- INCOMLETE!
 
 	# SEND
-	print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Sending...")
-	send_status = False
-	while not send_status:
-		twitter_response = api.update_status(tweets_to_send[0]['title'])
-		print(f"response: {twitter_response}")
-		try:
-			twitter_response.id
-			send_status = True
-		except Exception as e:
-			print(f"{logz.timestamp()}{Fore.RED} TWEET → ERROR → {Style.RESET_ALL}Cannot tweet! Trying again in 3sec.\n{e}")
-			time.sleep(3)
+	# print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Sending...")
+	# send_status = False
+	# while not send_status:
+	# 	twitter_response = api.update_status(tweets_to_send[0]['title'])
+	# 	print(f"response: {twitter_response}")
+	# 	try:
+	# 		twitter_response.id
+	# 		send_status = True
+	# 	except Exception as e:
+	# 		print(f"{logz.timestamp()}{Fore.RED} TWEET → ERROR → {Style.RESET_ALL}Cannot tweet! Trying again in 3sec.\n{e}")
+	# 		time.sleep(3)
 
 		# ------ CREATE THREAD IF LONG TIP  ------------
 		# INCOMPLETE!
@@ -128,27 +131,25 @@ def main():
 	
 
 	# # ------ WRITE TO TXT  -------------------------
-	# tweet = ''
-	# with open(CONFIG['tweet-file'], 'w') as filehandle:
-	# 	for tweet in tweets_history:
-	# 		filehandle.write('%s\n' % tweet)
+	tweet = ''
+	with open(CONFIG['tweet-file'], 'w') as filehandle:
+		for tweet in tweets_history:
+			filehandle.write('%s\n' % tweet)
 
 	# ------ WRITE TO S3  --------------------------
-	#aws.s3_upload(CONFIG['tweet-file'])
+	aws.s3_upload(CONFIG['tweet-file'])
 
 	# ------ WRITE TO DYNAMO  ----------------------
 	print(f"{logz.timestamp()}{Fore.YELLOW} AWS → DYNAMO → {Style.RESET_ALL}Inserting...")
 	[aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet) for tweet in tweets_to_send]
-	# for tweet in tweets_to_send:
-	# 	r = aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet)
-	# 	print(f"response: {r}")
-	# 	exit()
-
+	for tweet in tweets_to_send:
+		r = aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet)
+		print(f"response: {r}")
 
 	# ------ DONE  ---------------------------------
-	
+
+
 
 # ------ START  -----------------------------
-
 if __name__ == '__main__':
 	main()
