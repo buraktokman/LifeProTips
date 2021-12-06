@@ -8,35 +8,49 @@
 [![Donate with Bitcoin](https://img.shields.io/badge/Donate-BTC-orange.svg)](https://blockchain.info/address/17dXgYr48j31myKiAhnM5cQx78XBNyeBWM)
 [![Donate with Ethereum](https://img.shields.io/badge/Donate-ETH-blue.svg)](https://etherscan.io/address/91dd20538de3b48493dfda212217036257ae5150)
 
-Tips that improve your life in one way or another. This software downloads life tips from reddit.com/r/LifeProTips and tweet the most upvoted tips on Twitter.
+Tips that improve your life in one way or another. This software downloads life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweet the most upvoted tips on Twitter.
 
 ------
-### USAGE:
+### Warning:
 Before using, modify account credentials in **inc** folder.
 
 ------
 ### Instructions
 
-0. Fork, clone or download this repository
+0. Fork, clone or download this repository.
 
     `git clone https://github.com/buraktokman/LifeProTips.git`
 
-1. Navigate to the directory
+1. Navigate to the directory.
 
     `cd LifeProTips`
 
-2. Install requirements
+2. Install requirements.
 
-    `pip3 install -r requirements.txt`
+    `pip3 install -r requirements.txt` 
 
-3. Modify account credentials in 'inc' directory
-
-4. Run the following script
+4. Run the following script.
 
     `python3 bot.py`
 
-
-### LICENSE
 ------
+### Versions
+
+**0.1.2 beta (WIP)**
+
+```
+- [ ] 
+```
+
+**0.1.1 beta**
+
+- [x] Fetching via PRAW done.
+- [x] Twitter API integration done.
+- [x] AWS S3 integration done.
+- [x] AWS Lambda functionality done.
+
+---
+
+### License
 
 MIT License
