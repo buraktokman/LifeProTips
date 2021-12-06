@@ -18,7 +18,6 @@ Licence   	: EULA
 			  Proprietary and confidential
 #-------------------------------------------------------------------------------
 '''
-
 from pathlib import Path
 from colorama import Fore, Back, Style
 import sys
@@ -26,19 +25,21 @@ import json
 import tweepy
 sys.path.insert(0, str(Path(Path(__file__).parents[0] / 'lib')))
 import utilz
-
 import logging
 logger = logging.getLogger()
 
 
+
+# ------ CONFIG --------------------------------
 WORK_DIR = str(Path(Path(__file__).parents[0])) + '/'
 CONFIG = {'config-file': WORK_DIR + 'inc/config.json'}
-
 '''
 https://developer.twitter.com/en/docs/basics/rate-limiting
 https://developer.twitter.com/en/portal/products/elevated
 '''
 
+
+# ------ MAIN ----------------------------------
 def create_api():
 	global CONFIG
 
@@ -53,8 +54,10 @@ def create_api():
 	print(f"TWITTER → AUTH → Authorizing")
 
 	# LOAD CONFIG
-	CONFIG = utilz.load_json(CONFIG, str(Path(Path(__file__).parents[0])) + '/inc/account-twitter.json')
+	CONFIG = utilz.load_json(CONFIG, WORK_DIR + CONFIG['twitter-account-file'])
 
+
+	# ------ AUTH TWITTER --------------------------
 	auth = tweepy.OAuthHandler(CONFIG['consumer-key'], CONFIG['consumer-secret'])
 	auth.set_access_token(CONFIG['access-token'], CONFIG['access-token-secret'])
 	api = tweepy.API(auth)

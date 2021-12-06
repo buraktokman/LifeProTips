@@ -31,12 +31,8 @@ import utilz
 
 
 # ------ CONFIG --------------------------------
-WORK_DIR = str(Path(Path(__file__).parents[0])) + '/'
-INC_DIR = str(Path(Path(__file__).parents[1])) + '/inc/'
-CONFIG = {	'config-file': INC_DIR + 'config.json',
-			'tweet-file': 'tweets.txt'}
-# LOAD .JSON CONFIG
-CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
+WORK_DIR = str(Path(Path(__file__).parents[1])) + '/'
+INC_DIR = WORK_DIR + '/inc/'
 
 
 # ----------------------------------------------
@@ -47,26 +43,24 @@ CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
 	#										#
 	#	#	#	#	#	#	#	#	#	#	#
 
-def s3_download():
+def s3_download(bucket_name, file_name):
 	''' Download from S3
 	'''
-	global CONFIG
 	print(f"{logz.timestamp()}{Fore.YELLOW} AWS → S3 → {Style.RESET_ALL}Downloading...")
 
 	try:
 		s3 = boto3.resource('s3')
-		s3.Bucket(CONFIG['bucket-name']).download_file(CONFIG['tweet-file'],
-														WORK_DIR + CONFIG['tweet-file']) #2nd arg. is s3 path
+		s3.Bucket(bucket_name).download_file(file_name.split('/')[-1],
+												WORK_DIR + '/res/' + file_name) #2nd arg. is s3 path
 		return True
 	except Exception as e:
 		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → {Style.RESET_ALL}ERROR Cannot download!\n{e}")
 		return False
 	
 
-def s3_upload(file_path):
+def s3_upload(bucket_name, file_path):
 	''' Upload to S3
 	'''
-	global CONFIG
 	print(f"{logz.timestamp()}{Fore.YELLOW} AWS → S3 → {Style.RESET_ALL}Uploading...")
 
 	# s3 = boto3.resource('s3')
@@ -77,7 +71,7 @@ def s3_upload(file_path):
 		#s3.Bucket(CONFIG['bucket-name']).put_object(key=s3_path, body=file_object)
 		# upload_file(Filename, Bucket, Key, ExtraArgs=None, Callback=None, Config=None)
 		s3.meta.client.upload_file(file_path,
-									CONFIG['bucket-name'],
+									bucket_name,
 									file_path.split('/')[-1]) # filename as Key
 		return True
 	except Exception as e:
@@ -203,11 +197,12 @@ def dynamodb_del_item(table_name, key):
 # ------ START  --------------------------------
 if __name__ == '__main__':
 	# upload('/Users/hummingbird/Workspace/Sandbox/Bot-LifeTips/tweets.txt')
-	#s3_download()
+	s3_download('lifetips', 'tweets.txt')
+	exit()
 	
 	item = {'id': 'r8vdza', 'title': "If you're at a hotel and have to call 911", 'flair': 'Miscellaneous'}
-	#dynamodb_put_item(CONFIG['dynamodb-table'], item)
-	#dynamodb_del_item(CONFIG['dynamodb-table'], {'tipId': '1'})
+	dynamodb_put_item(CONFIG['dynamodb-table'], item)
+	dynamodb_del_item(CONFIG['dynamodb-table'], {'tipId': '1'})
 
 	key = {'id': 'r9dk8n', 'flair': 'Miscellaneous'}
 	r = dynamodb_get_item('lifetips', key)

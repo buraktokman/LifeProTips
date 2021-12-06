@@ -18,8 +18,8 @@ Licence   	: EULA
 			  proprietary and confidential
 #-------------------------------------------------------------------------------
 '''
-
 from pathlib import Path
+from re import sub
 from colorama import Fore, Back, Style
 import twitter
 import sys
@@ -33,17 +33,14 @@ import aws
 
 
 # ------ CONFIG --------------------------------
+WORK_DIR = str(Path(Path(__file__).parents[0])) + '/'
+CONFIG = {'config-file': WORK_DIR + 'inc/config.json'}
+HASHTAGS = ['tips', 'life']
 '''
 Reddit Dev > https://www.reddit.com/prefs/apps
+https://praw.readthedocs.io/en/latest/code_overview/models/submission.html
 https://praw.readthedocs.io/en/latest/code_overview/models/subreddit.html
 '''
-WORK_DIR = str(Path(Path(__file__).parents[0])) + '/'
-CONFIG = {	'reddit-account-file': WORK_DIR + 'inc/account-reddit.json',
-			'config-file': WORK_DIR + 'inc/config.json',
-			'tweet-file': WORK_DIR + 'tweets.txt',
-			'tweet-count': 6,
-			}
-HASHTAGS = ['tips', 'life']
 
 
 
@@ -53,8 +50,8 @@ def main():
 	global CONFIG
 	
 	# LOAD CONFIG
-	CONFIG = utilz.load_json(CONFIG, CONFIG['reddit-account-file'])
 	CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
+	CONFIG = utilz.load_json(CONFIG, WORK_DIR + CONFIG['reddit-account-file'])
 
 
 	# ------ FETCH REDDIT --------------------------
@@ -69,26 +66,31 @@ def main():
 	reddit_posts = []
 	for submission in reddit.subreddit("LifeProTips").top(time_filter='day', limit=CONFIG['tweet-count']):
 
-		# REPLACE 'LPT'
+		# REPLACE
 		rep = {"LPT ": "", "LPT: ": ""}
 		text = utilz.replace_all(submission.title, rep)
+		if "icons8" in submission.title:
+			submission.title = "Mod Pick"
 
 		# CAPITALIZE 1st
 		text = text[:1].upper() + text[1:]
-		
+
 		# ADD TO LIST
 		post = {'id': submission.id,
 				'title': text,
 				'content': submission.selftext,
-				'flair': submission.link_flair_text}
+				'flair': submission.link_flair_text,
+				'url': submission.url,
+				'permalink': submission.permalink,
+				'created_utc': int(submission.created_utc)}
 		reddit_posts.append(post)
 	
 
 	# ------ DOWNLOAD HISTORY  ---------------------
-	r = aws.s3_download()
+	r = aws.s3_download(CONFIG['bucket-name'], CONFIG['tweet-file'])
 
 	# ------ CHECK HISTORY  ------------------------
-	with open(CONFIG['tweet-file']) as f:
+	with open(WORK_DIR + CONFIG['tweet-file']) as f:
 		temp_str = f.read() #readlines()
 	tweets_history = temp_str.split('\n')
 
@@ -97,9 +99,12 @@ def main():
 	for reddit_post in reddit_posts:
 		key = {	'id': reddit_post['id'],
 				'flair': reddit_post['flair']}
+
+		# CHECK IN DYNAMODB
 		r = aws.dynamodb_get_item(CONFIG['dynamodb-table'], key=key)
 		# if reddit_post['title'] not in tweets_history:
 		if r == False:
+			line = f"{reddit_post['id']},{reddit_post['flair']}\n"
 			tweets_history.append(reddit_post['title'])
 			tweets_to_send.append(reddit_post)
 			break
@@ -137,16 +142,17 @@ def main():
 			filehandle.write('%s\n' % tweet)
 
 	# ------ WRITE TO S3  --------------------------
-	aws.s3_upload(CONFIG['tweet-file'])
+	aws.s3_upload(CONFIG['bucket-name'], WORK_DIR + CONFIG['tweet-file'])
 
 	# ------ WRITE TO DYNAMO  ----------------------
 	print(f"{logz.timestamp()}{Fore.YELLOW} AWS → DYNAMO → {Style.RESET_ALL}Inserting...")
 	[aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet) for tweet in tweets_to_send]
 	for tweet in tweets_to_send:
 		r = aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet)
-		print(f"response: {r}")
+		# print(f"response: {r}")
 
 	# ------ DONE  ---------------------------------
+	print(f'{logz.timestamp()}{Fore.GREEN} BOT → DONE → Completed')
 
 
 

@@ -1,5 +1,8 @@
 {	
-	"tweet-count": 6,
+	"tweet-count": 10,
 	"bucket-name": "lifetips",
-	"dynamodb-table": "lifetips"
+	"dynamodb-table": "lifetips",
+	"tweet-file": "res/tweets.txt",
+	"reddit-account-file": "inc/account-reddit.json",
+	"twitter-account-file": "inc/account-twitter.json"
 }
