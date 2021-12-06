@@ -24,7 +24,6 @@ import json
 def load_json(dict_arg, json_path):
 	'''Load .JSON config file
 	'''
-	global CONFIG
 	# Opening JSON file
 	with open(json_path) as json_file:
 		data = json.load(json_file)

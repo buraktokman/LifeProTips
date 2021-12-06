@@ -1,4 +1,4 @@
-#! usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
 #-------------------------------------------------------------------------------
@@ -33,8 +33,11 @@ logger = logging.getLogger()
 
 WORK_DIR = str(Path(Path(__file__).parents[0])) + '/'
 CONFIG = {'config-file': WORK_DIR + 'inc/config.json'}
-# https://developer.twitter.com/en/docs/basics/rate-limiting
 
+'''
+https://developer.twitter.com/en/docs/basics/rate-limiting
+https://developer.twitter.com/en/portal/products/elevated
+'''
 
 def create_api():
 	global CONFIG
@@ -50,11 +53,11 @@ def create_api():
 	print(f"TWITTER → AUTH → Authorizing")
 
 	# LOAD CONFIG
-	utilz.load_json(CONFIG, str(Path(Path(__file__).parents[0])) + '/inc/account-twitter.json')
+	CONFIG = utilz.load_json(CONFIG, str(Path(Path(__file__).parents[0])) + '/inc/account-twitter.json')
 
-	# Authenticate to Twitter
 	auth = tweepy.OAuthHandler(CONFIG['consumer-key'], CONFIG['consumer-secret'])
 	auth.set_access_token(CONFIG['access-token'], CONFIG['access-token-secret'])
+	api = tweepy.API(auth)
 
 	# Create API object
 	# Print a message and wait if the rate limit is exceeded

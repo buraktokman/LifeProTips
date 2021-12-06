@@ -10,13 +10,12 @@
 
 Tips that improve your life in one way or another. This software downloads life tips from reddit.com/r/LifeProTips and tweet the most upvoted tips on Twitter.
 
-### USAGE:
 ------
+### USAGE:
 Before using, modify account credentials in **inc** folder.
 
-
-### Instructions
 ------
+### Instructions
 
 0. Fork, clone or download this repository
 
