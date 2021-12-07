@@ -19,17 +19,18 @@ Before using, modify account credentials in **inc** folder.
 
 0. Fork, clone or download this repository.
 
-    `git clone https://github.com/buraktokman/LifeProTips.git`
-
 1. Navigate to the directory.
-
-    `cd LifeProTips`
 
 2. Install requirements.
 
-    `pip3 install -r requirements.txt` 
+3. Run the script.
 
-4. Run the following script.
+    
+
+    `git clone https://github.com/buraktokman/LifeProTips.git`
+    `cd LifeProTips`
+
+    `pip3 install -r requirements.txt` 
 
     `python3 bot.py`
 
@@ -42,8 +43,6 @@ Before using, modify account credentials in **inc** folder.
 - [ ] WIP
 - [x] History check on DynamoDB improved
 ```
-
-- History check on DynamoDB done.
 
 **0.1.2 beta**
 
