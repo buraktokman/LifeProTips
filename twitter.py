@@ -54,8 +54,9 @@ def create_api():
 	print(f"TWITTER → AUTH → Authorizing")
 
 	# LOAD CONFIG
-	CONFIG = utilz.load_json(CONFIG, WORK_DIR + CONFIG['twitter-account-file'])
-
+	CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
+	CONFIG = utilz.load_json(CONFIG, CONFIG['twitter-account-file'])
+	
 
 	# ------ AUTH TWITTER --------------------------
 	auth = tweepy.OAuthHandler(CONFIG['consumer-key'], CONFIG['consumer-secret'])

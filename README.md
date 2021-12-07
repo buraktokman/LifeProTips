@@ -36,13 +36,26 @@ Before using, modify account credentials in **inc** folder.
 ------
 ### Versions
 
-**0.1.2 beta (WIP)**
+**0.1.3 beta (WIP)**
 
 ```
-- [ ]
+- [ ] WIP
+- [x] History check on DynamoDB improved
 ```
 
 - History check on DynamoDB done.
+
+**0.1.2 beta**
+
+```
+- [ ] WIP
+- [x] Using Twitter threads for longer tips and for tips with added content
+- [x] History check moved from S3 object storage to DynamoDB table
+- [x] Lambda Layer creation bash script added to repository
+- [x] Created dynamic structure for configuration load
+- [x] First version of system design diagram added to documentation
+- [x] Refactoring done
+```
 
 **0.1.1 beta**
 

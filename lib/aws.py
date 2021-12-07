@@ -5,7 +5,7 @@
 Project		: LifeProTips
 Module		: aws
 Purpose   	: Manage AWS services
-Version		: 0.1.7 beta
+Version		: 0.1.2 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
@@ -56,7 +56,7 @@ def s3_download(bucket_name, file_name):
 	except Exception as e:
 		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → {Style.RESET_ALL}ERROR Cannot download!\n{e}")
 		return False
-	
+
 
 def s3_upload(bucket_name, file_path):
 	''' Upload to S3
@@ -89,8 +89,8 @@ def s3_get_buckets():
 	except Exception as e:
 		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → {Style.RESET_ALL}ERROR Cannot get buckets!\n{e}")
 		return False
-		
-		
+
+
 def lambda_handler(event, context):
     string = "dfghj"
     encoded_string = string.encode("utf-8")
@@ -199,7 +199,7 @@ if __name__ == '__main__':
 	# upload('/Users/hummingbird/Workspace/Sandbox/Bot-LifeTips/tweets.txt')
 	s3_download('lifetips', 'tweets.txt')
 	exit()
-	
+
 	item = {'id': 'r8vdza', 'title': "If you're at a hotel and have to call 911", 'flair': 'Miscellaneous'}
 	dynamodb_put_item(CONFIG['dynamodb-table'], item)
 	dynamodb_del_item(CONFIG['dynamodb-table'], {'tipId': '1'})

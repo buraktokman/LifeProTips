@@ -1,5 +1,6 @@
 {	
 	"tweet-count": 10,
+	"tweet-length": 240,
 	"bucket-name": "lifetips",
 	"dynamodb-table": "lifetips",
 	"tweet-file": "res/tweets.txt",
