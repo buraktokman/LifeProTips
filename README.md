@@ -25,14 +25,12 @@ Before using, modify account credentials in **inc** folder.
 
 3. Run the script.
 
-    
-
-    `git clone https://github.com/buraktokman/LifeProTips.git`
-    `cd LifeProTips`
-
-    `pip3 install -r requirements.txt` 
-
-    `python3 bot.py`
+    ```bash
+    git clone https://github.com/buraktokman/LifeProTips.git
+    cd LifeProTips
+    pip3 install -r requirements.txt
+    python3 bot.py
+    ```
 
 ------
 ### Versions
