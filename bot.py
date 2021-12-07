@@ -68,7 +68,7 @@ def main():
 	for submission in reddit.subreddit("LifeProTips").top(time_filter='day', limit=CONFIG['tweet-count']):
 
 		# REPLACE
-		rep = {"LPT ": "", "LPT: ": ""}
+		rep = {"LPT ": "", "LPT: ": "", "Lpt: ": ""}
 		text = utilz.replace_all(submission.title, rep)
 		if "icons8" in submission.title:
 			submission.title = "Mod Pick"

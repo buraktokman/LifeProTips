@@ -8,7 +8,7 @@
 [![Donate with Bitcoin](https://img.shields.io/badge/Donate-BTC-orange.svg)](https://blockchain.info/address/17dXgYr48j31myKiAhnM5cQx78XBNyeBWM)
 [![Donate with Ethereum](https://img.shields.io/badge/Donate-ETH-blue.svg)](https://etherscan.io/address/91dd20538de3b48493dfda212217036257ae5150)
 
-Tips that improve your life in one way or another. This software downloads life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweet the most upvoted tips on Twitter.
+Tips that improve your life in one way or another. This software downloads life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweets the most upvoted tips.
 
 ------
 ### Warning
@@ -33,6 +33,12 @@ Before using, modify account credentials in **inc** folder.
     ```
 
 ------
+### System Design
+
+![system-design.drawio](docs/system-design.drawio.png)
+
+------
+
 ### Versions
 
 **0.1.3 beta (WIP)**
