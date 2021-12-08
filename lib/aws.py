@@ -5,7 +5,7 @@
 Project		: LifeProTips
 Module		: aws
 Purpose   	: Manage AWS services
-Version		: 0.1.2 beta
+Version		: 0.1.3 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4

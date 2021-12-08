@@ -5,7 +5,7 @@
 Project		: LifeProTips
 Module		: logz
 Purpose   	: Print timestamp
-Version		: 0.1.1 beta
+Version		: 0.1.3 beta
 Status 		: Development
 
 Modified	: 2021 Dec 04
@@ -19,6 +19,7 @@ Licence   	: EULA
 #-------------------------------------------------------------------------------
 '''
 import json
+
 
 
 def load_json(dict_arg, json_path):
@@ -48,3 +49,33 @@ def replace_all(text, dic):
 	for i, j in dic.items():
 		text = text.replace(i, j)
 	return text
+
+
+# ------ CREATE TWEET  -------------------------
+def split_to_tweets(text, max_length):
+	''' Split content to tweets
+	'''
+	tweets = []
+	# SPLIT
+	sentences = text.split('.')
+	# REMOVE EMPTY SENTENCES
+	sentences = [x.lstrip().rstrip() for x in sentences if x != '']
+
+	# CONSTRUCT TWEET
+	tweet_text = ''
+	for sentence in sentences:
+		if (len(tweet_text) + len(sentence) + 2) < max_length :
+			tweet_text += sentence + '. '
+		else:
+			# ADD TWEET
+			tweets.append(tweet_text)
+			# RESET - ADD CURRENT SENTENCE FOR NEXT ITER.
+			tweet_text = sentence + '. '
+
+	# ADD LAST TWEET
+	# INCOMPLETE!
+	if tweet_text < max_length:
+		tweets.append(tweet_text)
+
+	# RETURN
+	return tweets

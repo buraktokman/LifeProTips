@@ -5,7 +5,8 @@
 Project		: LifeProTips
 Module		: bot
 Purpose   	: Download tips from Reddit and send to Twitter
-Version		: 0.1.2 beta
+Source		: https://github.com/buraktokman/LifeProTips
+Version		: 0.1.3 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
@@ -91,6 +92,7 @@ def main():
 	# r = aws.s3_download(CONFIG['bucket-name'], CONFIG['tweet-file'])
 
 	# ------ CHECK HISTORY  ------------------------
+	print(f'{logz.timestamp()}{Fore.GREEN} BOT → HISTORY → {Style.RESET_ALL}Checking...')
 	with open(WORK_DIR + CONFIG['tweet-file']) as f:
 		temp_str = f.read() #readlines()
 	tweets_history = temp_str.split('\n')
@@ -109,23 +111,28 @@ def main():
 			tweets_history.append(reddit_post['title'])
 			tweets_to_send.append(reddit_post)
 			break
-	print(f'{logz.timestamp()}{Fore.GREEN} BOT → NEW TIP → {Style.RESET_ALL}{tweets_to_send[0]["title"]}')
+	print(f'{logz.timestamp()}{Fore.GREEN} BOT → NEW TIP → {Style.RESET_ALL}({tweets_to_send[0]["flair"]}) {tweets_to_send[0]["title"]}')
+	if tweets_to_send[0]['content'] != '':
+		print(f'{logz.timestamp()}{Fore.GREEN} BOT → NEW TIP → Content exist')
 
 
-	# ------ AUTH TWITTER --------------------------
-	api = twitter.create_api()
+	# # ------ AUTH TWITTER --------------------------
+	# api = twitter.create_api()
 
-	# ------ SEND TWEET ---------------------------
-	# SELECT HASHTAG -- INCOMLETE!
+	# # ------ SEND TWEET ---------------------------
+	# # SELECT HASHTAG -- INCOMLETE!
 
-	# SEND
-	print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Sending...")
-	twitter_response = api.update_status(status=tweets_to_send[0]['title'])
-	# READ RESPONSE TO JSON
-	#twitter_response = json.dumps(twitter_response._json)
-	twitter_response = twitter_response._json
-	print(f"1 - responseTYpe:\n{type(twitter_response)}")
-	print(f"1 - response:\n{twitter_response}")
+	# # SEND
+	# print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Sending...")
+	# twitter_response = api.update_status(status=tweets_to_send[0]['title'])
+	
+	# # READ RESPONSE TO JSON
+	# #twitter_response = json.dumps(twitter_response._json)
+	# twitter_response = twitter_response._json
+	# print(f"1 - response:\n{twitter_response}")
+
+	# # LIKE TWEET
+	# api.create_favorite(twitter_response._json['id'])
 
 	# try:
 	# 	twitter_response.id
@@ -134,56 +141,40 @@ def main():
 	# 	print(f"{logz.timestamp()}{Fore.RED} TWEET → ERROR → {Style.RESET_ALL}Cannot tweet! Trying again in 3sec.\n{e}")
 	# 	time.sleep(3)
 
-	# ------ CREATE THREAD IF LONG CONTENT  --------
+	# # ------ CREATE THREAD IF LONG CONTENT  --------
+	# if tweets_to_send[0]['content'] != '':
+	# 	print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Long tip. Creating tweet thread")
 
-	# REMOVE THIS
-	tweets_to_send[0]['content'] = '''There is some great advice out there on personal finance for saving. I believe building a strong foundation for retirement (savings, IRAs, 401ks, etc.) is definitely something everyone should work on. I also agree that an emergency fund is important. All that said, make sure to take some chances as well, especially before you get older, get married, and have kids. You don’t have to buy luxury cars, take 10 exotic trips, or buy a million dollar house. One thing you should do is pick somewhere you have always wanted to go, save up, and get there, no matter what. Don’t skimp on the little things either. Make sure to take whatever time you need, plan it out, go to nice restaurants, see the sights, and stay in a nice hotel. A lot of my friends have waited and waited for those trips, thinking they would do it eventually. Some thought before they had kids, others on their honeymoon, and some when “they made enough money to justify it”. Most of them never got the chance. Some had kids early/unexpectedly, others married at the court house and didn’t want a honeymoon, some cancelled their honeymoons because of the pandemic, and others keep pushing the goal posts further on “how much they need to make to go to ____”. One trip, even an expensive one won’t break most people. It could also be the most amazing experience of your life. I got lucky and got to do mine when I was in college as part of a study abroad. I took loans out for it, worked OT at two retail jobs that semester, and didn’t have the loans paid back until I turned 30, but I have no regrets. It expanded my worldview, left me with some unbelievable memories, and made me a better person.'''
+	# 	# SPLIT
+	# 	tweets = utilz.split_to_tweets(tweets_to_send[0]['content'], CONFIG['tweet-length'])
 
-	# INCOMPLETE!
-	if tweets_to_send[0]['content'] != '':
-		print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Long tip. Creating tweet thread")
-
-		# SPLIT TO SENTENCES
-		sentences = tweets_to_send[0]['content'].split('.')
-		# REMOVE EMPTY SENTENCES
-		sentences = [x.lstrip().rstrip() for x in sentences if x != '']
-
-		# CONSTRUCT TWEET
-		tweet_text = ''
-		for sentence in sentences:
-			if (len(tweet_text) + len(sentence)) < CONFIG['tweet-length']:
-				tweet_text += sentence + '. '
-			else:
-				# TWEET
-				print(f'---\n{tweet_text}')
-				twitter_response = api.update_status(status=tweet_text,
-														in_reply_to_status_id=twitter_response['id'], #auto_populate_reply_metadata=True
-														)
-				# READ RESPONSE TO JSON
-				twitter_response = twitter_response._json
-				print(f'2 response:\n{twitter_response}')
-				# ADD CURRENT SENTENCE
-				tweet_text = sentence + '. '
-
-		# TWEET LAST GROUP
-		print(f'===\n{tweet_text}')
+	# 	# TWEET
+	# 	for tweet in tweets:
+	# 		print(f'#---------------\n{len(tweet)}\n{tweet}\n')
+	# 		twitter_response = api.update_status(status=tweet, in_reply_to_status_id=twitter_response['id'])
+	# 		# READ RESPONSE TO JSON
+	# 		twitter_response = twitter_response._json
+	# 		print(f'response:\n{twitter_response}')
+			
+	# 		# LIKE TWEET
+	# 		api.create_favorite(twitter_response._json['id'])
 
 
 	# # ------ WRITE TO TXT  -------------------------
-	# tweet = ''
-	# with open(CONFIG['tweet-file'], 'w') as filehandle:
-	# 	for tweet in tweets_history:
-	# 		filehandle.write('%s\n' % tweet)
+	tweet = ''
+	with open(WORK_DIR + CONFIG['tweet-file'], 'w') as filehandle:
+		for tweet in tweets_history:
+			filehandle.write('%s\n' % tweet)
 
 	# ------ WRITE TO S3  --------------------------
-	# aws.s3_upload(CONFIG['bucket-name'], WORK_DIR + CONFIG['tweet-file'])
+	aws.s3_upload(CONFIG['bucket-name'], WORK_DIR + CONFIG['tweet-file'])
 
 	# ------ WRITE TO DYNAMO  ----------------------
-	# print(f"{logz.timestamp()}{Fore.YELLOW} AWS → DYNAMO → {Style.RESET_ALL}Inserting...")
-	# [aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet) for tweet in tweets_to_send]
-	# for tweet in tweets_to_send:
-	# 	r = aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet)
-	# 	# print(f"response: {r}")
+	print(f"{logz.timestamp()}{Fore.YELLOW} AWS → DYNAMO → {Style.RESET_ALL}Inserting...")
+	[aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet) for tweet in tweets_to_send]
+	for tweet in tweets_to_send:
+		r = aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet)
+		# print(f"response: {r}")
 
 	# ------ DONE  ---------------------------------
 	print(f'{logz.timestamp()}{Fore.GREEN} BOT → DONE → Completed')
@@ -193,3 +184,4 @@ def main():
 # ------ START  -----------------------------
 if __name__ == '__main__':
 	main()
+	

@@ -5,7 +5,7 @@
 Project		: LifeProTips
 Module		: twitter
 Purpose   	: Twitter API
-Version		: 0.1.1 beta
+Version		: 0.1.3 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
@@ -25,6 +25,7 @@ import json
 import tweepy
 sys.path.insert(0, str(Path(Path(__file__).parents[0] / 'lib')))
 import utilz
+import logz
 import logging
 logger = logging.getLogger()
 
@@ -51,11 +52,11 @@ def create_api():
 		#										#
 		#	#	#	#	#	#	#	#	#	#	#
 
-	print(f"TWITTER → AUTH → Authorizing")
+	print(f"{logz.timestamp()}{Fore.MAGENTA} TWITTER → AUTH → {Style.RESET_ALL}Authorizing")
 
 	# LOAD CONFIG
 	CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
-	CONFIG = utilz.load_json(CONFIG, CONFIG['twitter-account-file'])
+	CONFIG = utilz.load_json(CONFIG, WORK_DIR + CONFIG['twitter-account-file'])
 	
 
 	# ------ AUTH TWITTER --------------------------

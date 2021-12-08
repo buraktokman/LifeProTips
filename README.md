@@ -45,6 +45,8 @@ Before using, modify account credentials in **inc** folder.
 
 ```
 - [ ] WIP
+- [x] (Minor fix) Constructing new tweet
+- [x] Like after tweet functionality added
 - [x] History check on DynamoDB improved
 ```
 

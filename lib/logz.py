@@ -5,7 +5,7 @@
 Project		: LifeProTips
 Module		: logz
 Purpose   	: Print timestamp
-Version		: 0.1.1 beta
+Version		: 0.1.3 beta
 Status 		: Development
 
 Modified	: 2021 Dec 04
