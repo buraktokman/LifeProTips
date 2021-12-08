@@ -41,10 +41,15 @@ Before using, modify account credentials in **inc** folder.
 
 ### Versions
 
-**0.1.3 beta (WIP)**
+**0.1.4 beta (WIP)**
 
 ```
-- [ ] WIP
+- [ ] Lambda function optimization
+```
+
+**0.1.3 beta**
+
+```
 - [x] (Minor fix) Constructing new tweet
 - [x] Like after tweet functionality added
 - [x] History check on DynamoDB improved
@@ -53,7 +58,6 @@ Before using, modify account credentials in **inc** folder.
 **0.1.2 beta**
 
 ```
-- [ ] WIP
 - [x] Using Twitter threads for longer tips and for tips with added content
 - [x] History check moved from S3 object storage to DynamoDB table
 - [x] Lambda Layer creation bash script added to repository
