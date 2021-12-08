@@ -5,7 +5,8 @@
 Project		: LifeProTips
 Module		: logz
 Purpose   	: Print timestamp
-Version		: 0.1.3 beta
+Source		: https://github.com/buraktokman/LifeProTips
+Version		: 0.1.4 beta
 Status 		: Development
 
 Modified	: 2021 Dec 04
@@ -14,8 +15,8 @@ Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
 Copyright 	: 2021, Bulrosa OU
 Licence   	: EULA
-			  Unauthorized copying of this file, via any medium is strictly prohibited
-			  Proprietary and confidential
+			  Unauthorized copying of this file, via any medium is strictly prohibited,
+			  proprietary and confidential
 #-------------------------------------------------------------------------------
 '''
 from datetime import datetime

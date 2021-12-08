@@ -3,9 +3,10 @@
 '''
 #-------------------------------------------------------------------------------
 Project		: LifeProTips
-Module		: logz
-Purpose   	: Print timestamp
-Version		: 0.1.3 beta
+Module		: utilz
+Purpose   	: Module for utility functions
+Source		: https://github.com/buraktokman/LifeProTips
+Version		: 0.1.4 beta
 Status 		: Development
 
 Modified	: 2021 Dec 04
@@ -14,8 +15,8 @@ Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
 Copyright 	: 2021, Bulrosa OU
 Licence   	: EULA
-			  Unauthorized copying of this file, via any medium is strictly prohibited
-			  Proprietary and confidential
+			  Unauthorized copying of this file, via any medium is strictly prohibited,
+			  proprietary and confidential
 #-------------------------------------------------------------------------------
 '''
 import json
@@ -33,6 +34,16 @@ def load_json(dict_arg, json_path):
 		#print(dict_arg)
 	
 	return dict_arg
+
+
+def load_hashtags(hashtag_path):
+	'''Load hashtags from file
+	'''
+	# OPEN
+	with open(hashtag_path) as hashtag_file:
+		tweets = hashtag_file.read().splitlines()
+	# RETURN
+	return tweets
 
 
 def merge_dicts(x, y):
@@ -56,6 +67,10 @@ def split_to_tweets(text, max_length):
 	''' Split content to tweets
 	'''
 	tweets = []
+	
+	# INCOMPLETE!
+	# . SPLIT AVOID LINKS
+
 	# SPLIT
 	sentences = text.split('.')
 	# REMOVE EMPTY SENTENCES
@@ -74,7 +89,7 @@ def split_to_tweets(text, max_length):
 
 	# ADD LAST TWEET
 	# INCOMPLETE!
-	if tweet_text < max_length:
+	if len(tweet_text) < max_length:
 		tweets.append(tweet_text)
 
 	# RETURN

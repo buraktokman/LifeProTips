@@ -21,13 +21,13 @@ def lambda_handler(event, context):
         'body': json.dumps('Hello from Lambda!')
     }
 
-def install_modules():
-    print("Installing modules...")
-    # subprocess.call(['pip3', 'install', '-r', 'requirements.txt'
-    #                             '-t /tmp/',
-    #                             '--no-cache-dir'])
-    subprocess.call('pip install -r requirements-t /tmp/ --no-cache-dir'.split(),
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL)
-    sys.path.insert(1, '/tmp/')
+# def install_modules():
+#     print("Installing modules...")
+#     # subprocess.call(['pip3', 'install', '-r', 'requirements.txt'
+#     #                             '-t /tmp/',
+#     #                             '--no-cache-dir'])
+#     subprocess.call('pip install -r requirements-t /tmp/ --no-cache-dir'.split(),
+#                         stdout=subprocess.DEVNULL,
+#                         stderr=subprocess.DEVNULL)
+#     sys.path.insert(1, '/tmp/')
  

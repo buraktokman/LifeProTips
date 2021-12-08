@@ -6,7 +6,7 @@ Project		: LifeProTips
 Module		: bot
 Purpose   	: Download tips from Reddit and send to Twitter
 Source		: https://github.com/buraktokman/LifeProTips
-Version		: 0.1.3 beta
+Version		: 0.1.4 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
@@ -37,7 +37,6 @@ import aws
 # ------ CONFIG --------------------------------
 WORK_DIR = str(Path(Path(__file__).parents[0])) + '/'
 CONFIG = {'config-file': WORK_DIR + 'inc/config.json'}
-HASHTAGS = ['tips', 'life']
 '''
 Reddit Dev > https://www.reddit.com/prefs/apps
 https://praw.readthedocs.io/en/latest/code_overview/models/submission.html
@@ -52,8 +51,10 @@ def main():
 	global CONFIG
 
 	# LOAD CONFIG
+	print(f"{logz.timestamp()}{Fore.GREEN} REDDIT → INIT → {Style.RESET_ALL}Loading configuration")
 	CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
 	CONFIG = utilz.load_json(CONFIG, WORK_DIR + CONFIG['reddit-account-file'])
+	hashtags = utilz.load_hashtags(WORK_DIR + CONFIG['hashtag-file'])
 
 
 	# ------ FETCH REDDIT --------------------------
@@ -112,52 +113,48 @@ def main():
 			tweets_to_send.append(reddit_post)
 			break
 	print(f'{logz.timestamp()}{Fore.GREEN} BOT → NEW TIP → {Style.RESET_ALL}({tweets_to_send[0]["flair"]}) {tweets_to_send[0]["title"]}')
-	if tweets_to_send[0]['content'] != '':
-		print(f'{logz.timestamp()}{Fore.GREEN} BOT → NEW TIP → Content exist')
 
 
-	# # ------ AUTH TWITTER --------------------------
-	# api = twitter.create_api()
+	# ------ AUTH TWITTER --------------------------
+	api = twitter.create_api()
 
-	# # ------ SEND TWEET ---------------------------
-	# # SELECT HASHTAG -- INCOMLETE!
-
-	# # SEND
-	# print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Sending...")
-	# twitter_response = api.update_status(status=tweets_to_send[0]['title'])
+	# ------ SEND TWEET ---------------------------
+	print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Sending...")
+	twitter_response = api.update_status(status=tweets_to_send[0]['title'])
 	
-	# # READ RESPONSE TO JSON
-	# #twitter_response = json.dumps(twitter_response._json)
-	# twitter_response = twitter_response._json
-	# print(f"1 - response:\n{twitter_response}")
+	# READ RESPONSE TO JSON
+	#twitter_response = json.dumps(twitter_response._json)
+	twitter_response = twitter_response._json
+	print(f"1 - response:\n{twitter_response}")
 
-	# # LIKE TWEET
+	# ADD HASHTAG -- INCOMLETE!
+
+	# LIKE TWEET
 	# api.create_favorite(twitter_response._json['id'])
 
-	# try:
-	# 	twitter_response.id
-	# 	send_status = True
-	# except Exception as e:
-	# 	print(f"{logz.timestamp()}{Fore.RED} TWEET → ERROR → {Style.RESET_ALL}Cannot tweet! Trying again in 3sec.\n{e}")
-	# 	time.sleep(3)
+	try:
+		twitter_response['id']
+	except Exception as e:
+		print(f"{logz.timestamp()}{Fore.RED} TWEET → ERROR → {Style.RESET_ALL}Cannot tweet! Trying again in 3sec.\n{e}")
+		time.sleep(3)
 
-	# # ------ CREATE THREAD IF LONG CONTENT  --------
-	# if tweets_to_send[0]['content'] != '':
-	# 	print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Long tip. Creating tweet thread")
+	# ------ CREATE THREAD IF LONG CONTENT  --------
+	if tweets_to_send[0]['content'] != '':
+		print(f"{logz.timestamp()}{Fore.MAGENTA} TWEET → {Style.RESET_ALL}Long tip, creating tweet thread")
 
-	# 	# SPLIT
-	# 	tweets = utilz.split_to_tweets(tweets_to_send[0]['content'], CONFIG['tweet-length'])
+		# SPLIT
+		tweets = utilz.split_to_tweets(tweets_to_send[0]['content'], CONFIG['tweet-length'])
 
-	# 	# TWEET
-	# 	for tweet in tweets:
-	# 		print(f'#---------------\n{len(tweet)}\n{tweet}\n')
-	# 		twitter_response = api.update_status(status=tweet, in_reply_to_status_id=twitter_response['id'])
-	# 		# READ RESPONSE TO JSON
-	# 		twitter_response = twitter_response._json
-	# 		print(f'response:\n{twitter_response}')
+		# TWEET
+		for tweet in tweets:
+			print(f'#---------------\n{len(tweet)}\n{tweet}\n')
+			twitter_response = api.update_status(status=tweet, in_reply_to_status_id=twitter_response['id'])
+			# READ RESPONSE TO JSON
+			twitter_response = twitter_response._json
+			print(f'response:\n{twitter_response}')
 			
-	# 		# LIKE TWEET
-	# 		api.create_favorite(twitter_response._json['id'])
+			# LIKE TWEET
+			# api.create_favorite(twitter_response._json['id'])
 
 
 	# # ------ WRITE TO TXT  -------------------------

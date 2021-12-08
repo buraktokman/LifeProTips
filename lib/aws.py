@@ -5,7 +5,8 @@
 Project		: LifeProTips
 Module		: aws
 Purpose   	: Manage AWS services
-Version		: 0.1.3 beta
+Source		: https://github.com/buraktokman/LifeProTips
+Version		: 0.1.4 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
@@ -14,8 +15,8 @@ Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
 Copyright 	: 2021, Bulrosa OU
 Licence   	: EULA
-			  Unauthorized copying of this file, via any medium is strictly prohibited
-			  Proprietary and confidential
+			  Unauthorized copying of this file, via any medium is strictly prohibited,
+			  proprietary and confidential
 #-------------------------------------------------------------------------------
 '''
 
@@ -54,7 +55,7 @@ def s3_download(bucket_name, file_name):
 												WORK_DIR + '/res/' + file_name) #2nd arg. is s3 path
 		return True
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → {Style.RESET_ALL}ERROR Cannot download!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → ERROR{Style.RESET_ALL} → Cannot download!\n{e}")
 		return False
 
 
@@ -75,7 +76,7 @@ def s3_upload(bucket_name, file_path):
 									file_path.split('/')[-1]) # filename as Key
 		return True
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → {Style.RESET_ALL}ERROR Cannot upload!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → ERROR{Style.RESET_ALL} → Cannot upload!\n{e}")
 		return False
 
 def s3_get_buckets():
@@ -87,7 +88,7 @@ def s3_get_buckets():
 			print(bucket.name)
 		return True
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → {Style.RESET_ALL}ERROR Cannot get buckets!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → S3 → ERROR{Style.RESET_ALL} → Cannot get buckets!\n{e}")
 		return False
 
 
@@ -120,7 +121,7 @@ def sns_get_topic(topic_name):
 		response = sns.get_topic_attributes(TopicArn=topic_name)
 		return response
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → SNS → {Style.RESET_ALL}ERROR Cannot get topic!\n{e}")
+		pprint(f"{logz.timestamp()}{Fore.RED} AWS → SNS → ERROR{Style.RESET_ALL} → Cannot get topic!\n{e}")
 		return False
 
 
@@ -151,7 +152,7 @@ def dynamodb_get_item(table_name, key):
 		# 	)
 		return response['Item']
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → {Style.RESET_ALL}ERROR Cannot get item!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → ERROR{Style.RESET_ALL} → Cannot get item!\n{e}")
 		return False
 
 
@@ -164,7 +165,7 @@ def dynamodb_get_all(table_name):
 		response = table.scan()
 		return response['Items']
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → {Style.RESET_ALL}ERROR Cannot get all!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → ERROR{Style.RESET_ALL} → Cannot get all!\n{e}")
 		return False
 
 
@@ -177,7 +178,7 @@ def dynamodb_put_item(table_name, item):
 		response = table.put_item(Item=item)
 		return response
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → {Style.RESET_ALL}ERROR Cannot put item!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → ERROR{Style.RESET_ALL} → Cannot put item!\n{e}")
 		return False
 
 
@@ -190,7 +191,7 @@ def dynamodb_del_item(table_name, key):
 		response = table.delete_item(Key=key)
 		return response
 	except Exception as e:
-		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → {Style.RESET_ALL}ERROR Cannot delete item!\n{e}")
+		print(f"{logz.timestamp()}{Fore.RED} AWS → DYNAMODB → ERROR{Style.RESET_ALL} → Cannot delete item!\n{e}")
 		return False
 
 

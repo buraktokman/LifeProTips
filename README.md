@@ -8,7 +8,7 @@
 [![Donate with Bitcoin](https://img.shields.io/badge/Donate-BTC-orange.svg)](https://blockchain.info/address/17dXgYr48j31myKiAhnM5cQx78XBNyeBWM)
 [![Donate with Ethereum](https://img.shields.io/badge/Donate-ETH-blue.svg)](https://etherscan.io/address/91dd20538de3b48493dfda212217036257ae5150)
 
-Tips that improve your life in one way or another. This software downloads life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweets the most upvoted tips.
+Tips that improve your life in one way or another. Cloud-native application developed to download life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweet the most upvoted tips daily. Complete system ready to execution upon deployment on Amazon Web Services (AWS).
 
 ------
 ### Warning
@@ -41,10 +41,18 @@ Before using, modify account credentials in **inc** folder.
 
 ### Versions
 
+**0.1.5 beta (to do)**
+
+```
+- Detect links while constructing tweets.
+```
+
 **0.1.4 beta (WIP)**
 
 ```
-- [ ] Lambda function optimization
+- Lambda function optimization.
+- Send hashtag attached tweet to gain more followers.
+- (Minor fix) Tweet character length detection for content title
 ```
 
 **0.1.3 beta**

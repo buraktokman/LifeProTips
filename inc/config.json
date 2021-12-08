@@ -4,6 +4,7 @@
 	"bucket-name": "lifetips",
 	"dynamodb-table": "lifetips",
 	"tweet-file": "res/tweets.txt",
+	"hashtag-file": "inc/hashtags.txt",
 	"reddit-account-file": "inc/account-reddit.json",
 	"twitter-account-file": "inc/account-twitter.json"
 }
