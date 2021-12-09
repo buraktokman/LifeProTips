@@ -41,7 +41,7 @@ Before using, modify account credentials in **inc** folder.
 
 ### Screenshots 
 
-![system-design.drawio](file:///Users/hummingbird/Workspace/Sandbox/Bot-LifeTips/docs/screenshot.png?lastModify=1639036722)
+![screenshot](file:///Users/hummingbird/Workspace/Sandbox/Bot-LifeTips/docs/screenshot.png?lastModify=1639036722)
 
 ------
 
