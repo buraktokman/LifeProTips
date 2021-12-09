@@ -1,5 +1,5 @@
 {	
-	"tweet-count": 10,
+	"tweet-count": 24,
 	"tweet-length": 240,
 	"bucket-name": "lifetips",
 	"dynamodb-table": "lifetips",
