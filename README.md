@@ -41,7 +41,7 @@ Before using, modify account credentials in **inc** folder.
 
 ### Screenshots 
 
-![screenshot](file:///Users/hummingbird/Workspace/Sandbox/Bot-LifeTips/docs/screenshot.png?lastModify=1639036722)
+![screenshot](docs/screenshot.png)
 
 ------
 
