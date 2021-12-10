@@ -3,5 +3,4 @@ tipoftheday
 trending
 like
 follow
-report
 tbt

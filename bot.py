@@ -10,7 +10,7 @@ Version		: 0.1.4 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
-Created   	: 2020 Mar 04
+Created   	: 2021 Dec 4
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
 Copyright 	: 2021, Bulrosa OU
@@ -80,7 +80,6 @@ def main():
 			submission.title = "Mod Pick"
 		# STRIP
 		text = text.rstrip().lstrip()
-
 		# CAPITALIZE 1st
 		text = text[:1].upper() + text[1:]
 
@@ -126,8 +125,8 @@ def main():
 	
 	print(f'{logz.timestamp()}{Fore.GREEN} BOT → SELECTED → {Style.RESET_ALL}{tweets_to_send[0]["id"]}')
 
+	# --- INCOMPLETE - REMOVE THIS! ----
 	# ONLY FIRST TIP
-	# INCOMPLETE - REMOVE THIS!
 	tweet_to_send = tweets_to_send[0]
 
 	# print(tweet_to_send)
@@ -187,14 +186,14 @@ def main():
 			filehandle.write('%s\n' % tweet)
 
 	# ------ WRITE TO S3  --------------------------
-	aws.s3_upload(CONFIG['bucket-name'], WORK_DIR + CONFIG['tweet-file'])
+	# aws.s3_upload(CONFIG['bucket-name'], WORK_DIR + CONFIG['tweet-file'])
 
 	# ------ WRITE TO DYNAMO  ----------------------
 	print(f"{logz.timestamp()}{Fore.YELLOW} AWS → DYNAMO → {Style.RESET_ALL}Inserting...")
 	# [aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet) for tweet in tweets_to_send]
 	for tweet in [tweet_to_send]:
 		r = aws.dynamodb_put_item(CONFIG['dynamodb-table'], tweet)
-		# print(f"response: {r}")
+		print(f"dynamo response: {r}")
 
 
 	# ------ DONE  ---------------------------------

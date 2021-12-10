@@ -47,19 +47,28 @@ Before using, modify account credentials in **inc** folder.
 
 ### Versions
 
-**0.1.5 beta (to do)**
+**0.1.6 beta (to do)**
 
 ```
 - Detect links while constructing tweets.
+- Generate lifetip in PNG image for Instagram post.
+- Complete Instagram integration.
 ```
 
-**0.1.4 beta (WIP)**
+**0.1.5 beta (WIP)**
+
+```
+- (Improvement) Formatting post content for rader-friendly Twitter thread.
+```
+
+**0.1.4 beta**
 
 ```
 - Lambda function optimization.
 - UI improvements, better output on terminal.
-- Send hashtag attached tweet to gain more followers.
+- Attach hashtag to first tweet to accelerate Twitter account growth.
 - (Minor fix) Tweet character length detection for content title
+- (Bug fix) History check on Dynamo 
 ```
 
 **0.1.3 beta**

@@ -10,7 +10,7 @@ Version		: 0.1.4 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
-Created   	: 2020 Mar 04
+Created   	: 2021 Dec 4
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
 Copyright 	: 2021, Bulrosa OU

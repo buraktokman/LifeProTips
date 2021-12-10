@@ -5,6 +5,7 @@
 	"dynamodb-table": "lifetips",
 	"tweet-file": "res/tweets.txt",
 	"hashtag-file": "inc/hashtags.txt",
-	"reddit-account-file": "inc/account-reddit.json",
-	"twitter-account-file": "inc/account-twitter.json"
-}
+	"reddit-account-file": "inc/reddit.json",
+	"twitter-account-file": "inc/twitter.json",
+	"instagram-account-file": "inc/instagram.json"
+	}
