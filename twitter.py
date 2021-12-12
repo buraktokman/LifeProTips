@@ -5,10 +5,10 @@
 Project		: LifeProTips
 Module		: twitter
 Purpose   	: Twitter API
-Version		: 0.1.3 beta
+Version		: 0.1.5 beta
 Status 		: Development
 
-Modified	: 2021 Dec 4
+Modified    : 2021 Dec 12
 Created   	: 2021 Dec 4
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
@@ -57,7 +57,7 @@ def create_api():
 	# LOAD CONFIG
 	CONFIG = utilz.load_json(CONFIG, CONFIG['config-file'])
 	CONFIG = utilz.load_json(CONFIG, WORK_DIR + CONFIG['twitter-account-file'])
-	
+
 
 	# ------ AUTH TWITTER --------------------------
 	auth = tweepy.OAuthHandler(CONFIG['consumer-key'], CONFIG['consumer-secret'])

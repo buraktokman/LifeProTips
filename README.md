@@ -10,6 +10,8 @@
 
 Tips that improve your life in one way or another. Cloud-native application developed to download life tips from [reddit.com/r/LifeProTips](https://www.reddit.com/r/LifeProTips/top/) and tweet the most upvoted tips daily. Complete system ready to execution upon deployment on Amazon Web Services (AWS).
 
+Twitter: [LifeProTips](https://twitter.com/lifetipsbaby)
+
 ------
 ### Warning
 Before using, modify account credentials in **inc** folder.
@@ -58,7 +60,8 @@ Before using, modify account credentials in **inc** folder.
 **0.1.5 beta (WIP)**
 
 ```
-- (Improvement) Formatting post content for rader-friendly Twitter thread.
+- (Improvement) Post content formatting for reader-friendly Twitter thread.
+- (NEW) Comprehensive EC2 instance management abilities in all regions added to AWS module.
 ```
 
 **0.1.4 beta**
@@ -68,7 +71,7 @@ Before using, modify account credentials in **inc** folder.
 - UI improvements, better output on terminal.
 - Attach hashtag to first tweet to accelerate Twitter account growth.
 - (Minor fix) Tweet character length detection for content title
-- (Bug fix) History check on Dynamo 
+- (Bug fix) History check on DynamoDB
 ```
 
 **0.1.3 beta**

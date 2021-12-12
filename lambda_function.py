@@ -1,3 +1,23 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+'''
+#-------------------------------------------------------------------------------
+Project     : LifeProTips
+Module      : lambda_function
+Purpose     : AWS Lambda function handler
+Source      : https://github.com/buraktokman/LifeProTips
+Version     : 0.1.5 beta
+Status      : Development
+
+Modified    : 2021 Dec 12
+Created     : 2021 Dec 4
+Author      : Burak Tokman
+Email       : buraktokman@hotmail.com
+Copyright   : 2021, Bulrosa OU
+Licence     : EULA
+              Unauthorized copying of this file, via any medium is strictly prohibited,
+              proprietary and confidential
+#---
 import os
 import sys
 import json

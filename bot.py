@@ -6,7 +6,7 @@ Project		: LifeProTips
 Module		: bot
 Purpose   	: Download tips from Reddit and send to Twitter
 Source		: https://github.com/buraktokman/LifeProTips
-Version		: 0.1.4 beta
+Version		: 0.1.5 beta
 Status 		: Development
 
 Modified	: 2021 Dec 4
@@ -132,7 +132,6 @@ def main():
 	# print(tweet_to_send)
 	# exit()
 
-
 	# ------ AUTH TWITTER --------------------------
 	api = twitter.create_api()
 
@@ -169,6 +168,15 @@ def main():
 		# TWEET
 		print(f'{Fore.YELLOW}LEN\t{Fore.MAGENTA}TWEET{Style.RESET_ALL}')
 		for tweet in tweets:
+
+			# CHECK IF SENTENCE IS LONGER THAN 240
+			#
+			# INCOMPLETE !!!
+			#
+			if len(tweet) > CONFIG['tweet-length']:
+				print(f"{Fore.RED}ERROR{Style.RESET_ALL} Tweet is too long!")
+				continue
+
 			twitter_response = api.update_status(status=tweet, in_reply_to_status_id=twitter_response['id'])
 			# READ RESPONSE TO JSON
 			twitter_response = twitter_response._json
@@ -180,10 +188,10 @@ def main():
 
 
 	# # ------ WRITE TO TXT  -------------------------
-	tweet = ''
-	with open(WORK_DIR + CONFIG['tweet-file'], 'w') as filehandle:
-		for tweet in tweets_history:
-			filehandle.write('%s\n' % tweet)
+	# tweet = ''
+	# with open(WORK_DIR + CONFIG['tweet-file'], 'w') as filehandle:
+	# 	for tweet in tweets_history:
+	# 		filehandle.write('%s\n' % tweet)
 
 	# ------ WRITE TO S3  --------------------------
 	# aws.s3_upload(CONFIG['bucket-name'], WORK_DIR + CONFIG['tweet-file'])

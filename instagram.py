@@ -6,10 +6,10 @@ Project		: LifeProTips
 Module		: instagram
 Purpose   	: Create PNG image and post on Instagram
 Source		: https://github.com/buraktokman/LifeProTips
-Version		: 0.1.4 beta
+Version		: 0.1.5 beta
 Status 		: Development
 
-Modified	: 2021 Dec 9
+Modified    : 2021 Dec 12
 Created   	: 2021 Dec 4
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
@@ -21,7 +21,7 @@ Licence   	: EULA
 '''
 from pathlib import Path
 from re import sub
-from PIL import Image, ImageFont, ImageDraw 
+from PIL import Image, ImageFont, ImageDraw
 from colorama import Fore, Back, Style
 import random
 import sys
@@ -79,7 +79,7 @@ def main():
 	print(f"{logz.timestamp()}{Fore.MAGENTA} INSTA → {Style.RESET_ALL}Sending...")
 	caption = content['title'] + '\n' + content['content']
 
-	# photo_path  = 
+	# photo_path  =
 	cl.photo_upload(path=Path("out/new_picture.jpg"),
 					caption=caption)
 
@@ -94,9 +94,9 @@ def main():
 
 	# REPLY
 	# INCOMPLETE
-	
 
-	
+
+
 
 	# ------ DONE  --------------------------------
 	print(f'{logz.timestamp()}{Fore.MAGENTA} INSTA → DONE → Completed')
@@ -106,4 +106,3 @@ def main():
 # ------ START  -----------------------------
 if __name__ == '__main__':
 	main()
-	

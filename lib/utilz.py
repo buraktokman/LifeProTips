@@ -6,10 +6,10 @@ Project		: LifeProTips
 Module		: utilz
 Purpose   	: Module for utility functions
 Source		: https://github.com/buraktokman/LifeProTips
-Version		: 0.1.4 beta
+Version		: 0.1.5 beta
 Status 		: Development
 
-Modified	: 2021 Dec 4
+Modified    : 2021 Dec 12
 Created   	: 2021 Dec 4
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
@@ -32,7 +32,7 @@ def load_json(dict_arg, json_path):
 		dict_arg = merge_dicts(dict_arg, data)
 		#CONFIG = {**CONFIG, **data} #CONFIG = CONFIG | data
 		#print(dict_arg)
-	
+
 	return dict_arg
 
 
@@ -67,7 +67,7 @@ def split_to_tweets(text, max_length):
 	''' Split content to tweets
 	'''
 	tweets = []
-	
+
 	# INCOMPLETE!
 	# . SPLIT AVOID LINKS
 

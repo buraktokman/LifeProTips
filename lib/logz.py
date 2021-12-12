@@ -6,10 +6,10 @@ Project		: LifeProTips
 Module		: logz
 Purpose   	: Print timestamp
 Source		: https://github.com/buraktokman/LifeProTips
-Version		: 0.1.4 beta
+Version		: 0.1.5 beta
 Status 		: Development
 
-Modified	: 2021 Dec 04
+Modified    : 2021 Dec 12
 Created   	: 2020 Mar 04
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
