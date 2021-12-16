@@ -9,7 +9,7 @@ Source		: https://github.com/buraktokman/LifeProTips
 Version		: 0.1.5 beta
 Status 		: Development
 
-Modified	: 2021 Dec 4
+Modified	: 2021 Dec 12
 Created   	: 2021 Dec 4
 Author		: Burak Tokman
 Email 		: buraktokman@hotmail.com
@@ -125,12 +125,19 @@ def main():
 	
 	print(f'{logz.timestamp()}{Fore.GREEN} BOT → SELECTED → {Style.RESET_ALL}{tweets_to_send[0]["id"]}')
 
+
+
 	# --- INCOMPLETE - REMOVE THIS! ----
+	for tweet in tweets_to_send:
+		if len(tweet) <= CONFIG['tweet-length']:
+			tweet_to_send = tweet
+			break
 	# ONLY FIRST TIP
-	tweet_to_send = tweets_to_send[0]
+	# tweet_to_send = tweets_to_send[0]
 
 	# print(tweet_to_send)
 	# exit()
+
 
 	# ------ AUTH TWITTER --------------------------
 	api = twitter.create_api()
@@ -212,4 +219,5 @@ def main():
 # ------ START  -----------------------------
 if __name__ == '__main__':
 	main()
+
 	
